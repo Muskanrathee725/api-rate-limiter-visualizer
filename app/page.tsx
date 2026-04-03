@@ -94,10 +94,10 @@ export default function RateLimiter() {
     setExpStatus(ok ? "allowed" : "blocked");
     if (ok) setAllowed(p => p + 1);
     else setBlocked(p => p + 1);
-    setLog(prev => [{ id, status: ok ? "allowed" : "blocked" }, ...prev].slice(0, 20));
+   setLog((prev: { id: number; status: "allowed" | "blocked" }[]) => [{ id, status: (ok ? "allowed" : "blocked") as "allowed" | "blocked" }, ...prev].slice(0, 20));
   };
 
-  const fireBurst = async () => {
+  const fireBurst = async (): Promise<void> => {
     setFiring(true);
     for (let i = 0; i < 8; i++) {
       if (!pausedRef.current) processRequest();
